@@ -232,10 +232,10 @@ Next steps to set Pi-hole's upstream DNS server to the unbound service
 2. Go to Settings --> DNS
 3. Set the Upstream DNS Servers to the locahost instance of unbound and deselect all other upstream servers
    
-![alt text](<images/upstream_dns.png> "Upstream DNS")
+![Screenshot](./images/upstream_dns.PNG "Upstream DNS")
 
 4. Enable DNSSEC on Pi-hole service
 
-![alt text](<images/enable_dnssec.png> "Enable DNSSEC")
+![Screenshot](./images/enable_dnssec.PNG "Enable DNSSEC")
 
 5. Reboot Server to Apply all changes and check configuration
