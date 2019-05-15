@@ -1,8 +1,6 @@
 # Open Source Ad-blocking, Secure, Recursive DNS System
 Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System setup
 
----
-
 ## Objective
 
 1. Open Source DNS system
