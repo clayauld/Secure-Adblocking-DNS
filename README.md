@@ -1,6 +1,8 @@
 # Open Source Ad-blocking, Secure, Recursive DNS System
 Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System setup
 
+I would like to thank @rajannpatel for posting his repo about this topic. His guide helped contribute to my current setup and notes. See his guide at rajannpatel/Pi-Hole-PiVPN-on-Google-Compute-Engine-Free-Tier-with-Full-Tunnel-and-Split-Tunnel-OpenVPN-Configs
+
 ## Objective
 
 1. Open Source DNS system
