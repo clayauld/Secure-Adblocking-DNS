@@ -11,12 +11,12 @@ Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System set
 
 ## Tasks
 
-* [ ] Requirements list
-* [ ] Dependencies list
+* [x] Requirements list
+* [x] Dependencies list
 * [ ] Create system diagram
-* [ ] Create install script for Ubuntu and Debian-based distros
-* [ ] Post initial code with README on Github
-* [ ] Promote code and ask for contributions or feature requests
+* [x] Create install script for Ubuntu and Debian-based distros
+* [x] Post initial code with README on Github
+* [x] Promote code and ask for contributions or feature requests
 
 ## Requirements
 
