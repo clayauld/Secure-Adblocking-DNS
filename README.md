@@ -5,7 +5,7 @@ Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System set
 
 1. Open Source DNS system
 2. Pi-hole based adblocking
-3. Recursive DNS
+3. Recursive DNS (see this link: https://www.cloudflare.com/learning/dns/what-is-recursive-dns/)
 4. DNS-over-TLS support (specifically for Android)
 5. Upload to Github and promote solution for use
 
