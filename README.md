@@ -26,7 +26,6 @@ Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System set
 4. DNS-over-TLS support using stunnel4
 5. Firewall using ufw
 6. Dynamic DNS support
-7. OpenVPN support
 
 ## Dependencies
 
@@ -35,7 +34,6 @@ Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System set
 * stunnel4
 * ufw firewall
 * ddclient
-* OpenVPN
 * Certbot for Let's Encrypt
 * Let's Encrypt certificate
 
@@ -44,7 +42,7 @@ Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System set
 ```bash
 # Debian-based installer for Ubuntu 18.04
 sudo apt update
-sudo apt -y install unbound stunnel4 ufw ddclient openvpn software-properties-common
+sudo apt -y install unbound stunnel4 ufw ddclient software-properties-common
 
 # Disable unbound temporarily as it causes an issue with dnsmasq until it is set up properly
 sudo systemctl disable unbound
