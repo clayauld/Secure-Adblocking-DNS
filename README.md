@@ -1,3 +1,15 @@
+# Edit on 12/15/2020 - I just discovered Technitium DNS Server found here: https://github.com/TechnitiumSoftware/DnsServer
+## Potential advantages over Pi-Hole:
+* Authoritative and recursive DNS server by default
+* No need to install Unbound or stunnel4
+
+## Potential disadvantages compared to Pi-Hole:
+* Newer project ("shiny")
+* Less active community
+* Only two contributors on Github.
+
+## I'll be testing Technitium and comparing it to Pi-Hole to determine reliability comparison.
+
 # Open Source Ad-blocking, Secure, Recursive DNS System
 Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System setup
 
