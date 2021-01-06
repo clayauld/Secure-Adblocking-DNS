@@ -9,6 +9,7 @@
 * Only two contributors on Github.
 
 ## I'll be testing Technitium and comparing it to Pi-Hole to determine reliability comparison.
+Quick review: The system works well and is much easier to set up. Within an hrs I had a Google Compute VM up and running with the server, configured proper firewall rules, install UFW firewall, enabled Letsencrypt and turned on DNS-over-TLS with the same adlists I was using on my Pi-Hole servers. This seems to be a more streamlined option over the original system I put together.
 
 # Open Source Ad-blocking, Secure, Recursive DNS System
 Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System setup
