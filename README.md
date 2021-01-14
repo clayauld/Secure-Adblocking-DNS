@@ -68,7 +68,7 @@ curl -sSL https://install.pi-hole.net | bash
 # 1. Take default settings unless you would like to tweak it to your preferences.
 # 2. Select standard settings and any upstream DNS servers of choice. These settings will be changed later
 # 3. Select any block lists of choice. These can be modified later. By default I select all block lists
- available in the installer
+#    available in the installer
 # 4. Make sure to install the web interface. This is useful in changing settings later.
 
 # Reset Pi-hole web password
