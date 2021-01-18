@@ -57,7 +57,7 @@ I would like to thank rajannpatel (https://github.com/rajannpatel) for posting h
 ```bash
 # Debian-based installer for Ubuntu 18.04
 sudo apt update
-sudo apt -y install unbound stunnel4 ufw ddclient software-properties-common
+sudo apt -y install unbound stunnel4 ufw software-properties-common
 
 # Disable unbound temporarily as it causes an issue with dnsmasq until it is set up properly
 sudo systemctl disable unbound
