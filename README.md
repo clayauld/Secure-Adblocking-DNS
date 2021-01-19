@@ -80,10 +80,9 @@ pihole -a -p
 #
 # Install Let's Encrypt certificate
 # Information can be found here: https://letsencrypt.org/getting-started/ and https://certbot.eff.org/
-sudo add-apt-repository universe
-sudo add-apt-repository -y ppa:certbot/certbot
-sudo apt update
-sudo apt -y install certbot
+sudo snap install core; sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
 #
 sudo service lighttpd stop
 # Obtain the certificate interactively
