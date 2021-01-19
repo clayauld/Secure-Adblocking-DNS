@@ -85,6 +85,7 @@ sudo add-apt-repository -y ppa:certbot/certbot
 sudo apt update
 sudo apt -y install certbot
 #
+sudo service lighttpd stop
 # Obtain the certificate interactively
 sudo certbot certonly
 #
@@ -106,8 +107,8 @@ setgid = stunnel4
 pid = /stunnel.pid
 
 [dns]
-cert = /etc/letsencrypt/live/vps.clayauld.com/fullchain.pem
-key = /etc/letsencrypt/live/vps.clayauld.com/privkey.pem
+cert = /etc/letsencrypt/live/example.domain.com/fullchain.pem
+key = /etc/letsencrypt/live/example.domain.com/privkey.pem
 accept = 853
 connect = 127.0.0.1:53
 #TIMEOUTidle = 1
@@ -116,9 +117,7 @@ connect = 127.0.0.1:53
 
 # This is the end of the file
 
-# Edit /etc/default/stunnel4. Find the following line:
-Enabled=0
-# Set the line to the following and close the editor:
+# Edit /etc/default/stunnel4. Add the following line:
 Enabled=1
 
 # Enable stunnel4 to run on boot
