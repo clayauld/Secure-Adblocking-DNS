@@ -224,8 +224,6 @@ server:
 
 # This is the end of pi-hole.conf
 
-# Download a copy of the root hints from Internic
-sudo wget https://www.internic.net/domain/named.root -O /var/lib/unbound/root.hints
 
 # Enable the unbound system service
 sudo systemctl enable unbound
