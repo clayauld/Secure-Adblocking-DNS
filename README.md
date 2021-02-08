@@ -90,6 +90,8 @@ sudo certbot certonly
 #
 # Follow the documentation here to enable https for lighttpd: https://discourse.pi-hole.net/t/enabling-https-for-your-pi-hole-web-interface/5771
 
+sudo service lighttpd start
+
 #################################################################################################
 
 # Set up DNS-Over-TLS support using Stunnel4
@@ -231,6 +233,47 @@ sudo systemctl enable unbound
 sudo systemctl start unbound
 # Check the status of the unbound service and make sure everything started okay
 sudo systemctl status unbound
+
+#################################################################################################
+#### Add this next part if you want to enable HTTPS connection to Pi-Hole Web UI ###
+
+sudo apt install nginx
+sudo nano /etc/nginx/sites-available/pihole-redirect
+
+### Edit /etc/nginx/sites-available/pihole-redirect using nano or another text editor.
+# The file should have the following contents:
+
+server {
+  listen 444 ssl;
+  server_name dns3.clayauld.com;
+
+ #SSL
+  ssl_certificate /etc/letsencrypt/live/example.domain.com/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/example.domain.com/privkey.pem;
+
+  # Deny access to root
+  location / {
+      autoindex off;
+      deny all;
+  }
+
+   location /admin {
+   rewrite /(.*) /$1 break;
+   proxy_pass http://127.0.0.1:80/admin/;
+   proxy_set_header Host $host;
+   proxy_set_header X-Real-IP $remote_addr;
+   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+   proxy_read_timeout 90;
+  }
+}
+
+# This is the end of /etc/nginx/sites-available/pihole-redirect
+
+sudo rm -rf /etc/nginx/sites-enabled/*
+sudo ln -s /etc/nginx/sites-available/pihole-redirect /etc/nginx/sites-enabled/pihole-redirect
+sudo service nginx restart
+
+#################################################################################################
 ```
 
 Next steps to set Pi-hole's upstream DNS server to the unbound service
