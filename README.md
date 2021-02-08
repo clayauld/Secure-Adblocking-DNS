@@ -57,7 +57,7 @@ I would like to thank rajannpatel (https://github.com/rajannpatel) for posting h
 ```bash
 # Debian-based installer for Ubuntu 18.04
 sudo apt update
-sudo apt -y install unbound stunnel4 ufw software-properties-common
+sudo apt -y install unbound stunnel4 ufw software-properties-common dns-root-data
 
 # Disable unbound temporarily as it causes an issue with dnsmasq until it is set up properly
 sudo systemctl disable unbound
@@ -161,7 +161,7 @@ server:
     #access-control: 192.168.8.0/24 allow
 
     # Use this only when you downloaded the list of primary root servers!
-    root-hints: "/var/lib/unbound/root.hints"
+    root-hints: "/usr/share/dns/root.hints"
 
     # enable to not answer id.server and hostname.bind queries.
     hide-identity: yes
