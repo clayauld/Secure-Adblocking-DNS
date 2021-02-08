@@ -245,7 +245,7 @@ sudo nano /etc/nginx/sites-available/pihole-redirect
 
 server {
   listen 444 ssl;
-  server_name dns3.clayauld.com;
+  server_name example.domain.com;
 
  #SSL
   ssl_certificate /etc/letsencrypt/live/example.domain.com/fullchain.pem;
