@@ -48,7 +48,6 @@ I would like to thank rajannpatel (https://github.com/rajannpatel) for posting h
 * Unbound
 * stunnel4
 * ufw firewall
-* ddclient
 * Certbot for Let's Encrypt
 * Let's Encrypt certificate
 
@@ -284,8 +283,8 @@ Next steps to set Pi-hole's upstream DNS server to the unbound service
    
 ![Screenshot](./images/upstream_dns.PNG "Upstream DNS")
 
-4. Enable DNSSEC on Pi-hole service
+4. Disable DNSSEC on Pi-hole service as it is enabled in the Unbound service.
 
-![Screenshot](./images/enable_dnssec.PNG "Enable DNSSEC")
+![Screenshot](./images/disable_dnssec.PNG "Disable DNSSEC")
 
 5. Reboot Server to Apply all changes and check configuration
