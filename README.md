@@ -285,6 +285,6 @@ Next steps to set Pi-hole's upstream DNS server to the unbound service
 
 4. Disable DNSSEC on Pi-hole service as it is enabled in the Unbound service.
 
-![Screenshot](./images/disable_dnssec.PNG "Disable DNSSEC")
+![Screenshot](./images/disable_dnssec.png "Disable DNSSEC")
 
 5. Reboot Server to Apply all changes and check configuration
