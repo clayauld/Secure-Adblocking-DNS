@@ -48,7 +48,8 @@ sudo apt update
 sudo apt -y install unbound stunnel4 ufw software-properties-common dns-root-data
 ```
 
-### Disable unbound temporarily as it causes an issue with dnsmasq until it is set up properly
+### Disable unbound temporarily 
+Unbound causes an issue with dnsmasq until it is set up properly
 
 ```bash
 sudo systemctl disable unbound
@@ -167,8 +168,6 @@ server:
     # Level 5 logs client identification for cache misses.  Default is
     # level 1.
     verbosity: 0
-    # If no logfile is specified, syslog is used
-    logfile: "/var/log/unbound/unbound.log"
     
     interface: 127.0.0.1
     port: 5335
@@ -311,8 +310,8 @@ server:
     log-servfail: no
     # Do not print log lines to inform about local zone actions
     log-local-actions: no
-    # Do not print log lines that say why queries return SERVFAIL to clients
-    logfile: /dev/null
+    # If no logfile is specified, syslog is used
+    logfile: "/var/log/unbound/unbound.log"
     
     # Ensure privacy of local IP ranges
     private-address: 192.168.0.0/16
