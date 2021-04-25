@@ -412,15 +412,17 @@ sudo service nginx restart
 
 In order to experience high speed and low latency DNS resolution, you need to make some changes to your Pi-hole. These configurations are crucial because if you skip these steps you may experience very slow response times:
 
-1. Open the configuration file `/etc/pihole/setupVars.conf` and add the entry below.
+1. Open the configuration file `/etc/pihole/setupVars.conf` and add/modify the ``CACHE_SIZE`` entry, shown below.
 
 ``
 CACHE_SIZE=0
 ``
 
+2. Run `pihole -r` and select the "Repair" option. This will set the cache size to zero in `/etc/dnsmasq.d/01-pihole.conf`.
+
 * This step is important because the caching is already handled by the Unbound. **Please note that if the changes are only made to the file `/etc/dnsmasq.d/01-pihole.conf` they will be overwritten once you update/modify Pi-hole.**
 
-2. When you're using unbound you're relying on that for DNSSEC validation and caching, and Pi-hole doing those same things are just going to waste time validating DNSSEC twice. In order to resolve this issue you need to untick the `Use DNSSEC` option in Pi-hole web interface by navigating to `Settings > DNS > Advanced DNS settings`.  
+3. When you're using unbound you're relying on that for DNSSEC validation and caching, and Pi-hole doing those same things are just going to waste time validating DNSSEC twice. In order to resolve this issue you need to untick the `Use DNSSEC` option in Pi-hole web interface by navigating to `Settings > DNS > Advanced DNS settings`.  
 
 ![Screenshot](./images/disable_dnssec.png "Disable DNSSEC")
 
