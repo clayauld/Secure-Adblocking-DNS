@@ -11,7 +11,8 @@ AnudeepND has also provided some great sources of information. See https://githu
 2. Pi-hole based adblocking
 3. Recursive DNS (see this link: https://www.cloudflare.com/learning/dns/what-is-recursive-dns/)
 4. DNS-over-TLS support (specifically for Android)
-5. Upload to Github and promote solution for use
+5. Optional DNS-over-HTTPS support (dnsdist allows support for both)
+6. Upload to Github and promote solution for use
 
 ## Tasks
 
@@ -26,14 +27,14 @@ AnudeepND has also provided some great sources of information. See https://githu
 1. Pi-Hole with https
 2. Let's Encrypt
 3. Unbound DNS
-4. DNS-over-TLS support using stunnel4
+4. DNS-over-TLS support using ~~stunnel4~~ dnsdist (stunnel4 config broke as of 9/30/2021)
 5. Firewall using ufw
 
 ## Dependencies
 
 * Pi-hole
 * Unbound
-* stunnel4
+* ~~stunnel4~~ dnsdist
 * ufw firewall
 * Certbot for Let's Encrypt
 * Let's Encrypt certificate
@@ -45,7 +46,7 @@ AnudeepND has also provided some great sources of information. See https://githu
 
 ```bash
 sudo apt update
-sudo apt -y install unbound stunnel4 ufw software-properties-common dns-root-data
+sudo apt -y install unbound dnsdist ufw software-properties-common dns-root-data
 ```
 
 ### Disable unbound temporarily 
@@ -99,55 +100,76 @@ Follow the documentation here to enable https for lighttpd: https://discourse.pi
 sudo service lighttpd start
 ```
 
-## Set up DNS-Over-TLS support using Stunnel4
-Note: Setup documentation found at https://mindlesstux.com/2018/12/07/setup-your-own-dns-over-tls/
+## Set up DNS-Over-TLS support using ~~Stunnel4~~ dnsdist
+Note: Setup documentation found at https://www.leaseweb.com/labs/2020/07/set-up-private-dns-over-tls-https/
 
-### Edit /etc/stunnel/dnstls.conf using nano or another text editor.
+### Edit /etc/dnsdist/dnsdist.conf using nano or another text editor.
 
 The file should have the following contents:
-
+ * Note: change ```dns.example.com``` to your correct hostname
 ```bash
-sslVersion = TLSv1.2
+addACL('0.0.0.0/0')
 
-chroot = /var/run/stunnel4
-setuid = stunnel4
-setgid = stunnel4
-pid = /stunnel.pid
+-- path for certs and listen address for DoT ipv4,
+-- by default listens on port 853.
+-- Set X(int) for tcp fast open queue size.
+addTLSLocal("0.0.0.0", "/etc/letsencrypt/live/dns.example.com/fullchain.pem", "/etc/letsencrypt/live/dns.example.com/privkey.pem", { doTCP=true, reusePort=true, tcpFastOpenSize=64 })
 
-[dns]
-cert = /etc/letsencrypt/live/example.domain.com/fullchain.pem
-key = /etc/letsencrypt/live/example.domain.com/privkey.pem
-accept = 853
-connect = 127.0.0.1:53
-#TIMEOUTidle = 1
-#TIMEOUTclose = 1
-#TIMEOUTbusy = 1
+-- path for certs and listen address for DoH ipv4,
+-- by default listens on port 443.
+-- Set X(int) for tcp fast open queue size.
+-- 
+-- In this example we listen directly on port 443. However, since the DoH queries are simple HTTPS requests, the server can be hidden behind Nginx or Haproxy.
+addDOHLocal("0.0.0.0", "/etc/letsencrypt/live/dns.example.com/fullchain.pem", "/etc/letsencrypt/live/dns.example.com/privkey.pem", "/dns-query", { doTCP=true, reusePort=true, tcpFastOpenSize=64 })
+
+-- set X(int) number of queries to be allowed per second from a IP
+addAction(MaxQPSIPRule(50), DropAction())
+
+--  drop ANY queries sent over udp
+addAction(AndRule({QTypeRule(DNSQType.ANY), TCPRule(false)}), DropAction())
+
+-- set X number of entries to be in dnsdist cache by default
+-- memory will be preallocated based on the X number
+pc = newPacketCache(10000, {maxTTL=86400})
+getPool(""):setCache(pc)
+
+-- server policy to choose the downstream servers for recursion
+setServerPolicy(leastOutstanding)
+
+-- Here we define our backend, the pihole dns server
+newServer({address="127.0.0.1:53", name="127.0.0.1:53"})
+
+setMaxTCPConnectionsPerClient(1000)    -- set X(int) for number of tcp connections from a single client. Useful for rate limiting the concurrent connections.
+setMaxTCPQueriesPerConnection(100)    -- set X(int) , similiar to addAction(MaxQPSIPRule(X), DropAction())
 ```
 
+<!---
 ### Edit /etc/default/stunnel4. Add the following line:
-
 ```bash
 Enabled=1
 ```
+-->
 
-### Enable stunnel4 to run on boot
+### Enable ~~stunnel4~~ dnsdist to run on boot
 
 ```bash
-sudo systemctl enable stunnel4
+sudo systemctl enable dnsdist
 ```
 
-### Start the stunnel4 service
+### Start the ~~stunnel4~~ dnsdist service
 
 ```bash
-sudo systemctl start stunnel4
+sudo systemctl start dnsdist
 ```
 
-### Check the status of stunnel4 when a client tries to connect
+### Check the status of ~~stunnel4~~ dnsdist when a client tries to connect
 
 ```bash
-sudo systemctl status stunnel4
+sudo systemctl status dnsdist
 ``` 
 The output should show the service running and clients connecting
+
+
 
 ### Set up unbound as a recursive, authoritative DNS server
 Note: This set up was derived from the site https://calomel.org/unbound_dns.html
