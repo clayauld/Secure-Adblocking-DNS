@@ -137,7 +137,7 @@ getPool(""):setCache(pc)
 setServerPolicy(leastOutstanding)
 
 -- Here we define our backend, the pihole dns server
-newServer({address="127.0.0.1:53", name="127.0.0.1:53"})
+newServer({address="127.0.0.1:53", name="127.0.0.1:53", checkInterval=3600})
 
 setMaxTCPConnectionsPerClient(1000)    -- set X(int) for number of tcp connections from a single client. Useful for rate limiting the concurrent connections.
 setMaxTCPQueriesPerConnection(100)    -- set X(int) , similiar to addAction(MaxQPSIPRule(X), DropAction())
