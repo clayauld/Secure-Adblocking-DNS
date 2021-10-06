@@ -99,8 +99,22 @@ Follow the documentation here to enable https for lighttpd: https://discourse.pi
 ```bash 
 sudo service lighttpd start
 ```
+## Option 1: Set up DNS-Over-TLS support using Nginx as a transparent proxy
+Note: This will overwrite your Nginx config, but will back up the current config to ```/etc/nginx/nginx.conf```.
 
-## Set up DNS-Over-TLS support using ~~Stunnel4~~ dnsdist
+Run the following command:
+
+```bash
+curl -s https://raw.githubusercontent.com/clayauld/Secure-Adblocking-DNS/master/nginx/install.sh | sudo bash
+```
+Open ```/etc/nginx/streams/DoT_dns``` and edit the location of your certs to the correct location(s) for your server.
+
+Run the following command to reload the Nginx config.
+```bash
+sudo systemctl restart nginx
+```
+
+## Option 2: Set up DNS-Over-TLS support using ~~Stunnel4~~ dnsdist
 Note: Setup documentation found at https://www.leaseweb.com/labs/2020/07/set-up-private-dns-over-tls-https/
 
 ### Edit /etc/dnsdist/dnsdist.conf using nano or another text editor.
@@ -171,7 +185,7 @@ The output should show the service running and clients connecting
 
 
 
-### Set up unbound as a recursive, authoritative DNS server
+## Set up unbound as a recursive, authoritative DNS server
 Note: This set up was derived from the site https://calomel.org/unbound_dns.html
 
 ```bash

@@ -6,6 +6,7 @@ echo "PLEASE BE AWARE THIS WILL OVERWRITE YOUR CURRENT NGINX CONFIG!!"
 echo
 echo "However, it will back up your old config in case you need to revert."
 echo
+sudo apt install nginx
 cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 curl -s https://raw.githubusercontent.com/clayauld/Secure-Adblocking-DNS/master/nginx/nginx.conf > /etc/nginx/nginx.conf
 mkdir /etc/nginx/streams
