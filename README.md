@@ -102,14 +102,14 @@ sudo service lighttpd start
 ## Option 1: Set up DNS-Over-TLS support using Nginx as a transparent proxy
 Note: This will overwrite your Nginx config, but will back up the current config to ```/etc/nginx/nginx.conf```.
 
-Run the following command:
+1. Run the following command:
 
 ```bash
 curl -s https://raw.githubusercontent.com/clayauld/Secure-Adblocking-DNS/master/nginx/install.sh | sudo bash
 ```
-Open ```/etc/nginx/streams/DoT_dns``` and edit the location of your certs to the correct location(s) for your server.
+2. Open ```/etc/nginx/streams/DoT_dns``` and edit the location of your certs to the correct location(s) for your server.
 
-Run the following command to reload the Nginx config.
+3. Run the following command to reload the Nginx config.
 ```bash
 sudo systemctl restart nginx
 ```
