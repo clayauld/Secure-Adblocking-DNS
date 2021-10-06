@@ -1,0 +1,19 @@
+upstream dns-servers {
+    zone dns 64k;
+    server    127.0.0.1:53;
+}
+server {
+    listen 853 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/dns.example.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/dns.example.com/privkey.pem; # managed by Certbot
+    #ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+    ssl_protocols        TLSv1.2 TLSv1.3;
+    ssl_ciphers          HIGH:!aNULL:!MD5;
+        
+    ssl_handshake_timeout    10s;
+    ssl_session_cache        shared:SSL:20m;
+    ssl_session_timeout      4h;
+    proxy_ssl off;
+    proxy_pass dns-servers;
+    proxy_bind $remote_addr transparent;
+}

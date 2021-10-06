@@ -1,0 +1,10 @@
+[Unit]
+Description=A script to enable transparent Nginx proxy
+After=multi-user.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/transparent-proxy
+ 
+[Install]
+WantedBy=multi-user.target
