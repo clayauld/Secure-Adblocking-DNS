@@ -116,7 +116,7 @@ sudo service lighttpd start
 
 ### DNS-over-TLS Setup
 
-#### Option 1: Set up DNS-Over-TLS support using Nginx as a transparent proxy
+#### Option 1: Nginx as transparent proxy
 
 <details>
 <summary>click to show installation instructions </summary>
@@ -136,7 +136,7 @@ sudo systemctl restart nginx
 ```
 </details>
 
-#### Option 2: Set up DNS-Over-TLS support using Stunnel4
+#### Option 2: Stunnel4
 
 <details>
 <summary>click to show installation instructions </summary>
@@ -192,7 +192,7 @@ The output should show the service running and clients connecting
 
 </details>
 
-#### Option 3: Set up DNS-Over-TLS support using dnsdist
+#### Option 3: dnsdist
 
 <details>
 <summary>click to show installation instructions </summary>
