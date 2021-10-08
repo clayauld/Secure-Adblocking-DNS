@@ -1,4 +1,7 @@
 # Open Source Ad-blocking, Secure, Recursive DNS System
+
+## Introduction
+
 Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System setup
 
 I would like to thank [rajannpatel](https://github.com/rajannpatel) for posting his repo about this topic. His guide helped contribute to my current setup and notes. See his guide at rajannpatel/Pi-Hole-PiVPN-on-Google-Compute-Engine-Free-Tier-with-Full-Tunnel-and-Split-Tunnel-OpenVPN-Configs
@@ -21,23 +24,24 @@ AnudeepND has also provided some great sources of information. See this link [he
 * [x] Create install script for Ubuntu and Debian-based distros
 * [x] Post initial code with README on Github
 * [x] Promote code and ask for contributions or feature requests
+* [ ] Create easy-to-use install scripts
 
 ## Requirements
 
 1. Pi-Hole with https
 2. Let's Encrypt
 3. Unbound DNS
-4. DNS-over-TLS support using ~~stunnel4~~ dnsdist (stunnel4 config broke as of 9/30/2021)
+4. DNS-over-TLS support using Nginx transparent proxy, stunnel4, or dnsdist
 5. Firewall using ufw
 
 ## Dependencies
 
 * Pi-hole
 * Unbound
-* ~~stunnel4~~ dnsdist
+* Nginx, stunnel4, or dnsdist
 * ufw firewall
-* Certbot for Let's Encrypt
-* Let's Encrypt certificate
+* Certbot for Let's Encrypt or ZeroSSL
+* Let's Encrypt or ZeroSSL certificate(s)
 
 ## Install script steps
  Note: Debian-based installer for Ubuntu 20.04 or 20.10
