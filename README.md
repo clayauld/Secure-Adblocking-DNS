@@ -85,7 +85,7 @@ pihole -a -p
 
 ### Install Let's Encrypt certificate
 
-**Note: The following is optional only if https is desired for the Web Interface** 
+Note: The following is optional only if https is desired for the Web Interface
 
 <details>
 <summary>click to show installation instructions </summary>
@@ -118,10 +118,10 @@ sudo service lighttpd start
 
 #### Option 1: Set up DNS-Over-TLS support using Nginx as a transparent proxy
 
-**Note: This will overwrite your Nginx config, but will back up the current config to ```/etc/nginx/nginx.conf```.**
-
 <details>
 <summary>click to show installation instructions </summary>
+
+Note: This will overwrite your Nginx config, but will back up the current config to ```/etc/nginx/nginx.conf```.
 
 1. Run the following command:
 
@@ -136,20 +136,76 @@ sudo systemctl restart nginx
 ```
 </details>
 
-#### Option 2: Set up DNS-Over-TLS support using ~~Stunnel4~~ dnsdist
-
-**Note: Setup documentation found at [here](https://www.leaseweb.com/labs/2020/07/set-up-private-dns-over-tls-https/)**
+#### Option 2: Set up DNS-Over-TLS support using Stunnel4
 
 <details>
 <summary>click to show installation instructions </summary>
 
-#### Install dnsdist
+Note: Setup documentation found [here](https://mindlesstux.com/2018/12/07/setup-your-own-dns-over-tls/)
+
+##### Edit /etc/stunnel/dnstls.conf using nano or another text editor.
+
+The file should have the following contents:
+
+```bash
+sslVersion = TLSv1.2
+
+chroot = /var/run/stunnel4
+setuid = stunnel4
+setgid = stunnel4
+pid = /stunnel.pid
+
+[dns]
+cert = /etc/letsencrypt/live/example.domain.com/fullchain.pem
+key = /etc/letsencrypt/live/example.domain.com/privkey.pem
+accept = 853
+connect = 127.0.0.1:53
+#TIMEOUTidle = 1
+#TIMEOUTclose = 1
+#TIMEOUTbusy = 1
+```
+
+##### Edit /etc/default/stunnel4. Add the following line:
+
+```bash
+Enabled=1
+```
+
+##### Enable stunnel4 to run on boot
+
+```bash
+sudo systemctl enable stunnel4
+```
+
+##### Start the stunnel4 service
+
+```bash
+sudo systemctl start stunnel4
+```
+
+##### Check the status of stunnel4 when a client tries to connect
+
+```bash
+sudo systemctl status stunnel4
+``` 
+The output should show the service running and clients connecting
+
+</details>
+
+#### Option 3: Set up DNS-Over-TLS support using dnsdist
+
+<details>
+<summary>click to show installation instructions </summary>
+
+Note: Setup documentation found at [here](https://www.leaseweb.com/labs/2020/07/set-up-private-dns-over-tls-https/)
+
+##### Install dnsdist
 
 ```bash
 sudo apt install dnsdist
 ```
 
-#### Edit /etc/dnsdist/dnsdist.conf using nano or another text editor.
+##### Edit /etc/dnsdist/dnsdist.conf using nano or another text editor.
 
 The file should have the following contents:
  * Note: change ```dns.example.com``` to your correct hostname
@@ -196,19 +252,19 @@ Enabled=1
 ```
 -->
 
-#### Enable ~~stunnel4~~ dnsdist to run on boot
+##### Enable dnsdist to run on boot
 
 ```bash
 sudo systemctl enable dnsdist
 ```
 
-#### Start the ~~stunnel4~~ dnsdist service
+##### Start the dnsdist service
 
 ```bash
 sudo systemctl start dnsdist
 ```
 
-#### Check the status of ~~stunnel4~~ dnsdist when a client tries to connect
+##### Check the status of dnsdist when a client tries to connect
 
 ```bash
 sudo systemctl status dnsdist
@@ -435,7 +491,7 @@ dig sigok.verteiltesysteme.net @127.0.0.1 -p 5335
 </details>
 
 ### Optional: Install Nginx
-**Note: Add this next part if you want to enable HTTPS connection to Pi-Hole Web UI**
+Note: Add this next part if you want to enable HTTPS connection to Pi-Hole Web UI
 
 <details>
 <summary>click to show installation instructions </summary>
