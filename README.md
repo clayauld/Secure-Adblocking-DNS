@@ -2,11 +2,7 @@
 
 ## Introduction
 
-Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System setup
-
-I would like to thank [rajannpatel](https://github.com/rajannpatel) for posting his repo about this topic. His guide helped contribute to my current setup and notes. See his guide at rajannpatel/Pi-Hole-PiVPN-on-Google-Compute-Engine-Free-Tier-with-Full-Tunnel-and-Split-Tunnel-OpenVPN-Configs
-
-AnudeepND has also provided some great sources of information. See this link [here.](https://github.com/anudeepND/pihole-unbound)
+Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System setup.
 
 ## Objective
 
@@ -585,3 +581,9 @@ Next steps to set Pi-hole's upstream DNS server to the unbound service
 4. Reboot Server to Apply all changes and check configuration
 
 </details>
+
+## Credits
+
+I would like to thank [rajannpatel](https://github.com/rajannpatel) for posting his repo about this topic. His guide helped contribute to my current setup and notes. See his guide at [here.]([rajannpatel/Pi-Hole-PiVPN-on-Google-Compute-Engine-Free-Tier-with-Full-Tunnel-and-Split-Tunnel-OpenVPN-Configs)](https://github.com/rajannpatel/Pi-Hole-PiVPN-on-Google-Compute-Engine-Free-Tier-with-Full-Tunnel-and-Split-Tunnel-OpenVPN-Configs)
+
+AnudeepND has also provided some great sources of information. See this link [here.](https://github.com/anudeepND/pihole-unbound)
