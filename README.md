@@ -43,6 +43,10 @@ AnudeepND has also provided some great sources of information. See this link [he
 * Certbot for Let's Encrypt or ZeroSSL
 * Let's Encrypt or ZeroSSL certificate(s)
 
+## Contributions welcome!
+
+Please see [Contributing](Contributing.md) page for more info.
+
 ## Install script steps
  Note: Debian-based installer for Ubuntu 20.04 or 20.10
 
