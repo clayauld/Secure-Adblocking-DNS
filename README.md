@@ -278,7 +278,7 @@ The output should show the service running and clients connecting
 </details>
 
 ### Set up unbound as a recursive, authoritative DNS server
-Note: This set up was derived from the site https://calomel.org/unbound_dns.html
+Note: This set up was derived from this [site.](https://calomel.org/unbound_dns.html)
 
 <details>
 <summary>click to show installation instructions </summary>
