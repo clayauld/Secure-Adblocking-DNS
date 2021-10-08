@@ -1,15 +1,15 @@
 # Open Source Ad-blocking, Secure, Recursive DNS System
 Secure (DNS-over-TLS) Adblocking (Pi-hole) Recursive (unbound) Server System setup
 
-I would like to thank rajannpatel (https://github.com/rajannpatel) for posting his repo about this topic. His guide helped contribute to my current setup and notes. See his guide at rajannpatel/Pi-Hole-PiVPN-on-Google-Compute-Engine-Free-Tier-with-Full-Tunnel-and-Split-Tunnel-OpenVPN-Configs
+I would like to thank [rajannpatel](https://github.com/rajannpatel) for posting his repo about this topic. His guide helped contribute to my current setup and notes. See his guide at rajannpatel/Pi-Hole-PiVPN-on-Google-Compute-Engine-Free-Tier-with-Full-Tunnel-and-Split-Tunnel-OpenVPN-Configs
 
-AnudeepND has also provided some great sources of information. See https://github.com/anudeepND/pihole-unbound
+AnudeepND has also provided some great sources of information. See this link [here.](https://github.com/anudeepND/pihole-unbound)
 
 ## Objective
 
 1. Open Source DNS system
 2. Pi-hole based adblocking
-3. Recursive DNS (see this link: https://www.cloudflare.com/learning/dns/what-is-recursive-dns/)
+3. Recursive DNS (see this link [here](https://www.cloudflare.com/learning/dns/what-is-recursive-dns/))
 4. DNS-over-TLS support (specifically for Android)
 5. Optional DNS-over-HTTPS support (dnsdist allows support for both)
 6. Upload to Github and promote solution for use
@@ -44,12 +44,15 @@ AnudeepND has also provided some great sources of information. See https://githu
 
 ### Update and install software
 
+<details>
+<summary>click to show installation instructions </summary>
+
 ```bash
 sudo apt update
-sudo apt -y install unbound dnsdist ufw software-properties-common dns-root-data
+sudo apt -y install unbound ufw software-properties-common dns-root-data
 ```
 
-### Disable unbound temporarily 
+#### Disable unbound temporarily 
 Unbound causes an issue with dnsmasq until it is set up properly
 
 ```bash
@@ -57,7 +60,7 @@ sudo systemctl disable unbound
 sudo systemctl stop unbound
 ```
 
-### Pi-hole automated install
+#### Pi-hole automated install
 
 ```bash
 curl -sSL https://install.pi-hole.net | bash
@@ -68,17 +71,22 @@ curl -sSL https://install.pi-hole.net | bash
  * Select any block lists of choice. These can be modified later. By default I select all block lists available in the installer
  * Make sure to install the web interface. This is useful in changing settings later.
 
-### Reset Pi-hole web password
+#### Reset Pi-hole web password
 
 ```bash
 pihole -a -p
 ```
 
+</details>
+
 ### Install Let's Encrypt certificate
 
 **Note: The following is optional only if https is desired for the Web Interface** 
 
- Information can be found here: https://letsencrypt.org/getting-started/ and https://certbot.eff.org/
+<details>
+<summary>click to show installation instructions </summary>
+
+ Information can be found [here](https://letsencrypt.org/getting-started/) and [here](https://certbot.eff.org/)
 
 ```bash
 sudo snap install core; sudo snap refresh core
@@ -94,13 +102,22 @@ Obtain the certificate interactively
 sudo certbot certonly
 ```
 
-Follow the documentation here to enable https for lighttpd: https://discourse.pi-hole.net/t/enabling-https-for-your-pi-hole-web-interface/5771
+Follow the documentation here to enable https for lighttpd [here](https://discourse.pi-hole.net/t/enabling-https-for-your-pi-hole-web-interface/5771)
 
 ```bash 
 sudo service lighttpd start
 ```
-## Option 1: Set up DNS-Over-TLS support using Nginx as a transparent proxy
-Note: This will overwrite your Nginx config, but will back up the current config to ```/etc/nginx/nginx.conf```.
+
+</details>
+
+### DNS-over-TLS Setup
+
+#### Option 1: Set up DNS-Over-TLS support using Nginx as a transparent proxy
+
+**Note: This will overwrite your Nginx config, but will back up the current config to ```/etc/nginx/nginx.conf```.**
+
+<details>
+<summary>click to show installation instructions </summary>
 
 1. Run the following command:
 
@@ -113,11 +130,22 @@ curl -s https://raw.githubusercontent.com/clayauld/Secure-Adblocking-DNS/master/
 ```bash
 sudo systemctl restart nginx
 ```
+</details>
 
-## Option 2: Set up DNS-Over-TLS support using ~~Stunnel4~~ dnsdist
-Note: Setup documentation found at https://www.leaseweb.com/labs/2020/07/set-up-private-dns-over-tls-https/
+#### Option 2: Set up DNS-Over-TLS support using ~~Stunnel4~~ dnsdist
 
-### Edit /etc/dnsdist/dnsdist.conf using nano or another text editor.
+**Note: Setup documentation found at [here](https://www.leaseweb.com/labs/2020/07/set-up-private-dns-over-tls-https/)**
+
+<details>
+<summary>click to show installation instructions </summary>
+
+#### Install dnsdist
+
+```bash
+sudo apt install dnsdist
+```
+
+#### Edit /etc/dnsdist/dnsdist.conf using nano or another text editor.
 
 The file should have the following contents:
  * Note: change ```dns.example.com``` to your correct hostname
@@ -164,29 +192,32 @@ Enabled=1
 ```
 -->
 
-### Enable ~~stunnel4~~ dnsdist to run on boot
+#### Enable ~~stunnel4~~ dnsdist to run on boot
 
 ```bash
 sudo systemctl enable dnsdist
 ```
 
-### Start the ~~stunnel4~~ dnsdist service
+#### Start the ~~stunnel4~~ dnsdist service
 
 ```bash
 sudo systemctl start dnsdist
 ```
 
-### Check the status of ~~stunnel4~~ dnsdist when a client tries to connect
+#### Check the status of ~~stunnel4~~ dnsdist when a client tries to connect
 
 ```bash
 sudo systemctl status dnsdist
 ``` 
 The output should show the service running and clients connecting
 
+</details>
 
-
-## Set up unbound as a recursive, authoritative DNS server
+### Set up unbound as a recursive, authoritative DNS server
 Note: This set up was derived from the site https://calomel.org/unbound_dns.html
+
+<details>
+<summary>click to show installation instructions </summary>
 
 ```bash
 sudo nano /etc/unbound/unbound.conf.d/pi-hole.conf
@@ -366,47 +397,51 @@ server:
     #local-zone: "localnetwork.local" static
 ```
 
-### Check the unbound config file for errors
+##### Check the unbound config file for errors
 Note: This is optional. 
 
 ```bash
 unbound-checkconf /etc/unbound/unbound.conf.d/pi-hole.conf
 ```
 
-### Enable the unbound and start system service
+#### Enable the unbound and start system service
 ```bash
 sudo systemctl enable unbound
 sudo systemctl start unbound
 ```
-### Check the status of the unbound service and make sure everything started okay
+#### Check the status of the unbound service and make sure everything started okay
 
 ```bash
 sudo systemctl status unbound
 ```
 
-### Check whether the domain is resolving and unbound is working. 
+#### Check whether the domain is resolving and unbound is working. 
 The first query will be slow but the subsequent queries will resolve under 1ms.
 ```
 dig github.com @127.0.0.1 -p 5335
 ```
 
-### Test DNSSEC validation
+#### Test DNSSEC validation
 The first command should give a status report of SERVFAIL and no IP address. The second should give NOERROR plus an IP address.
 
 ```bash
 dig sigfail.verteiltesysteme.net @127.0.0.1 -p 5335
 dig sigok.verteiltesysteme.net @127.0.0.1 -p 5335
 ```
+</details>
 
-## Install Nginx
+### Optional: Install Nginx
 **Note: Add this next part if you want to enable HTTPS connection to Pi-Hole Web UI**
+
+<details>
+<summary>click to show installation instructions </summary>
 
 ```bash
 sudo apt install nginx
 sudo nano /etc/nginx/sites-available/pihole-redirect
 ```
 
-### Edit /etc/nginx/sites-available/pihole-redirect using nano or another text editor.
+#### Edit /etc/nginx/sites-available/pihole-redirect using nano or another text editor.
 
 The file should have the following contents:
 
@@ -436,7 +471,7 @@ server {
 }
 ```
 
-### Enable the sites in Nginx and restart service
+#### Enable the sites in Nginx and restart service
 
 ```bash
 sudo rm -rf /etc/nginx/sites-enabled/*
@@ -444,7 +479,12 @@ sudo ln -s /etc/nginx/sites-available/pihole-redirect /etc/nginx/sites-enabled/p
 sudo service nginx restart
 ```
 
-## Important Steps:
+</details>
+
+### Important Steps:
+
+<details>
+<summary>click to show installation instructions </summary>
 
 In order to experience high speed and low latency DNS resolution, you need to make some changes to your Pi-hole. These configurations are crucial because if you skip these steps you may experience very slow response times:
 
@@ -462,7 +502,12 @@ CACHE_SIZE=0
 
 ![Screenshot](./images/disable_dnssec.png "Disable DNSSEC")
 
-## Final Steps:
+</details>
+
+### Final Steps:
+
+<details>
+<summary>click to show installation instructions </summary>
 
 Next steps to set Pi-hole's upstream DNS server to the unbound service
 
@@ -473,3 +518,5 @@ Next steps to set Pi-hole's upstream DNS server to the unbound service
 ![Screenshot](./images/upstream_dns.PNG "Upstream DNS")
 
 4. Reboot Server to Apply all changes and check configuration
+
+</details>
